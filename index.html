@@ -1,0 +1,1242 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFFFFF">
+    <title>How to Pay — jaoriche studio16</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Pattaya&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --page-white: #FFFFFF;
+            --page-blue: #E2E7F9;
+            --main-text: #90799E;
+            --secondary-text: #919ABB;
+            --border-color: #CED3EE;
+            --kbank-card: #E2E7F9;
+            --baac-card: #DDE1F5;
+            --wallet-card: #CED3EE;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FF 48%, #E2E7F9 100%);
+            min-height: 100vh;
+            color: var(--main-text);
+        }
+
+        .font-pattaya {
+            font-family: 'Pattaya', cursive;
+        }
+
+        @keyframes float-up-down {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+        }
+
+        @keyframes float-left-right {
+            0%, 100% { transform: translateX(0px) rotate(0deg); }
+            50% { transform: translateX(15px) rotate(-10deg); }
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes spin-slow {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes dash-animation {
+            from { stroke-dashoffset: 0; }
+            to { stroke-dashoffset: -24; }
+        }
+
+        .animate-dash {
+            animation: dash-animation 1s linear infinite;
+        }
+
+        .anim-float-1 { animation: float-up-down 4s ease-in-out infinite; }
+        .anim-float-2 { animation: float-up-down 5s ease-in-out infinite 1.5s; }
+        .anim-float-3 { animation: float-left-right 6s ease-in-out infinite; }
+        .anim-float-4 { animation: float-left-right 4.5s ease-in-out infinite 2s; }
+        .anim-pulse { animation: pulse-soft 3s ease-in-out infinite; }
+        .anim-spin { animation: spin-slow 8s linear infinite; }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.91);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(206, 211, 238, 0.75);
+            box-shadow: 0 20px 50px -10px rgba(145, 154, 187, 0.18),
+                        inset 0 2px 10px rgba(255, 255, 255, 0.85);
+        }
+
+        .virtual-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .virtual-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .virtual-card:active {
+            transform: translateY(2px) scale(0.98);
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .download-qr-btn,
+        .copy-note-btn {
+            transition: all 0.2s ease;
+        }
+
+        .download-qr-btn:active,
+        .copy-note-btn:active {
+            transform: scale(0.98);
+        }
+
+        .download-qr-btn:disabled {
+            opacity: 0.7;
+            cursor: wait;
+        }
+
+        .account-card-kiatnakin {
+            background: linear-gradient(135deg, #E2E7F9 0%, #F4F5FF 100%);
+            border-color: #CED3EE;
+        }
+
+        .account-card-baac {
+            background: linear-gradient(135deg, #DDE1F5 0%, #F0F1FC 100%);
+            border-color: #CED3EE;
+        }
+
+        .account-card-wallet {
+            background: linear-gradient(135deg, #CED3EE 0%, #E5E8F8 100%);
+            border-color: #C1C8E8;
+        }
+
+        .account-card-kiatnakin .account-brand,
+        .account-card-baac .account-brand,
+        .account-card-wallet .account-brand {
+            color: #90799E;
+            background: rgba(255, 255, 255, 0.75);
+            border-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .account-card-kiatnakin .account-copy-btn,
+        .account-card-baac .account-copy-btn,
+        .account-card-wallet .account-copy-btn {
+            color: #90799E;
+            background: #FFFFFF;
+        }
+
+        .account-card-kiatnakin .account-number,
+        .account-card-baac .account-number,
+        .account-card-wallet .account-number {
+            color: #766184;
+        }
+
+        .account-card-kiatnakin .account-description,
+        .account-card-baac .account-description,
+        .account-card-wallet .account-description {
+            color: #7D819F;
+        }
+
+        .account-card-kiatnakin .account-decoration,
+        .account-card-baac .account-decoration,
+        .account-card-wallet .account-decoration {
+            color: #FFFFFF;
+            opacity: 0.65;
+        }
+
+        .notice-card {
+            background: linear-gradient(135deg, #F8F9FF 0%, #E2E7F9 100%);
+            border-color: #CED3EE;
+        }
+
+        .slip-card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F6F7FF 55%, #E2E7F9 100%);
+            border-color: #CED3EE;
+        }
+
+        .main-text {
+            color: #90799E;
+        }
+
+        .secondary-text {
+            color: #919ABB;
+        }
+
+        .theme-border {
+            border-color: #CED3EE;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FFFFFF',
+                            100: '#F8F9FF',
+                            200: '#E2E7F9',
+                        },
+                        brown: {
+                            200: '#CED3EE',
+                            300: '#BFC6E6',
+                            400: '#919ABB',
+                            500: '#90799E',
+                            600: '#766184',
+                        },
+                        pink: {
+                            50: '#F8F9FF',
+                            100: '#E2E7F9',
+                            200: '#DDE1F5',
+                            300: '#CED3EE',
+                            400: '#A9B2D8',
+                            500: '#90799E',
+                            600: '#766184',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="flex flex-col items-center py-6 px-4 text-brown-600 relative overflow-x-hidden">
+
+    <!-- Background Decorative SVGs -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+
+        <svg class="absolute top-[5%] left-[10%] w-8 h-8 text-pink-300 anim-float-1" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+        </svg>
+
+        <svg class="absolute top-[15%] left-[2%] w-6 h-6 text-white/60 anim-pulse" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+
+        <svg class="absolute top-[8%] left-[25%] w-4 h-4 text-pink-400/50 anim-float-3" fill="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8"/>
+        </svg>
+
+        <svg class="absolute top-[10%] right-[8%] w-10 h-10 text-pink-200 anim-float-2" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+
+        <svg class="absolute top-[2%] right-[20%] w-5 h-5 text-white/80 anim-float-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+        </svg>
+
+        <svg class="absolute top-[40%] -left-2 w-12 h-12 text-pink-100 anim-pulse" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+
+        <svg class="absolute top-[50%] right-[2%] w-6 h-6 text-pink-300 anim-float-1" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+
+        <svg class="absolute bottom-[10%] left-[10%] w-8 h-8 text-pink-200 anim-float-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+
+        <svg class="absolute bottom-[5%] right-[15%] w-7 h-7 text-white/70 anim-float-2" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+        </svg>
+
+        <svg class="absolute bottom-[20%] right-[5%] w-4 h-4 text-pink-400/40 anim-pulse" fill="currentColor" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8"/>
+        </svg>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+         class="fixed bottom-8 left-1/2 transform -translate-x-1/2
+                bg-brown-500/95 backdrop-blur-sm text-cream-50 px-6 py-3
+                rounded-full shadow-xl transition-all duration-300
+                opacity-0 translate-y-4 pointer-events-none z-50
+                flex items-center gap-2 font-medium text-sm
+                border border-brown-400">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none" viewBox="0 0 24 24"
+             stroke-width="2.5" stroke="currentColor"
+             class="w-5 h-5 text-pink-200 shrink-0">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+
+        <span id="toastMessage">คัดลอกข้อมูลแล้ว</span>
+    </div>
+
+    <!-- Container หลัก -->
+    <div class="max-w-[420px] w-full relative z-10 space-y-5 pb-10">
+
+        <!-- Header -->
+        <div class="text-center pt-2 pb-2 relative">
+
+            <h1 class="font-pattaya text-4xl tracking-tight text-brown-500 flex items-center justify-center gap-3">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24" fill="currentColor"
+                     class="w-6 h-6 text-pink-400 anim-pulse">
+                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"/>
+                </svg>
+
+                How to Pay
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24" fill="currentColor"
+                     class="w-6 h-6 text-pink-400 anim-pulse transform -scale-x-100">
+                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"/>
+                </svg>
+
+            </h1>
+
+            <p class="text-sm font-medium mt-1" style="color:#919ABB;">
+                jaoriche studio16
+            </p>
+        </div>
+
+        <!-- การ์ดหลัก -->
+        <div class="glass-card rounded-[40px] p-3 relative z-10">
+
+            <!-- SVG ตกแต่งบนการ์ด -->
+            <svg class="absolute -top-4 -left-2 w-9 h-9 text-pink-300 anim-float-1 z-20 drop-shadow-sm"
+                 fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+
+            <svg class="absolute top-[25%] -right-3 w-7 h-7 text-pink-200 anim-float-2 z-20 drop-shadow-sm"
+                 fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+
+            <svg class="absolute bottom-[40%] -left-3 w-5 h-5 text-pink-400 anim-spin z-20 drop-shadow-sm"
+                 fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+
+            <!-- รูป QR Code พร้อมกรอบเส้นประ -->
+            <div class="relative p-2 rounded-[36px] z-10">
+
+                <svg class="absolute inset-0 w-full h-full pointer-events-none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2"
+                          width="calc(100% - 4px)"
+                          height="calc(100% - 4px)"
+                          rx="34" fill="none"
+                          stroke="#CED3EE" stroke-width="2.5"
+                          stroke-dasharray="12 12"
+                          stroke-linecap="round"
+                          class="animate-dash"/>
+                </svg>
+
+                <div class="rounded-[28px] overflow-hidden relative shadow-sm border-[4px] border-white">
+
+                    <img
+                        id="qrCodeImage"
+                        src="Payment(Note%20Slip)3_20261012030322.jpg"
+                        alt="QR Code สำหรับชำระเงิน jaoriche studio16"
+                        class="w-full h-auto object-cover"
+                        onerror="this.onerror=null;this.src='https://placehold.co/600x600/E2E7F9/90799E?text=How+to+Pay'">
+
+                </div>
+            </div>
+
+            <!-- ปุ่มบันทึกรูป QR Code -->
+            <div class="px-3 pt-3 pb-1 relative z-10">
+
+                <button
+                    type="button"
+                    id="downloadQrBtn"
+                    onclick="downloadQRCode()"
+                    class="download-qr-btn w-full flex items-center justify-center gap-2
+                           rounded-full py-3 px-4
+                           bg-white border-2 text-sm font-semibold
+                           shadow-sm hover:bg-pink-50 active:scale-[0.98]"
+                    style="border-color:#CED3EE;color:#90799E;">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width="19" height="19"
+                         viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+
+                    บันทึกรูป QR Code
+
+                </button>
+
+                <p class="text-center text-[10px] mt-2" style="color:#919ABB;">
+                    กดปุ่มบันทึกรูปคิวอาร์โค้ดหรือคัดลอกเลขบัญชีได้เลย
+                </p>
+            </div>
+
+            <!-- โซนข้อความ -->
+            <div class="p-4 pt-6 space-y-5">
+
+                <!-- กล่องต้อนรับ -->
+                <div class="text-center space-y-3">
+
+                    <p class="text-[15px] font-medium leading-relaxed" style="color:#90799E;">
+                        <span class="inline-flex items-center justify-center gap-1">
+                            เลขบัญชีตามนี้เลยค่า
+
+                            <svg class="w-4 h-4 anim-pulse"
+                                 style="color:#919ABB;"
+                                 fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                            </svg>
+                        </span>
+
+                        <br>
+                        ชื่อบัญชี
+
+                        <span class="font-bold px-2.5 py-0.5 rounded-lg border relative inline-block"
+                              style="color:#90799E;background:#F8F9FF;border-color:#CED3EE;">
+                            วาสิตา พ.
+
+                            <svg class="absolute -top-2 -right-2.5 w-4 h-4 anim-float-3"
+                                 style="color:#919ABB;"
+                                 fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </span>
+
+                        เท่านั้นน้า!!
+                    </p>
+
+                    <!-- คำแนะนำ -->
+                    <div class="inline-flex items-center justify-center gap-1.5
+                                text-[11px] font-medium
+                                px-4 py-2.5 rounded-full
+                                border shadow-sm whitespace-normal"
+                         style="color:#919ABB;background:#F8F9FF;border-color:#CED3EE;">
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="none" viewBox="0 0 24 24"
+                             stroke-width="2" stroke="currentColor"
+                             class="w-3.5 h-3.5 shrink-0"
+                             style="color:#919ABB;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"/>
+                        </svg>
+
+                        กดปุ่มบันทึกรูปคิวอาร์โค้ดหรือคัดลอกเลขบัญชีได้เลย
+
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             fill="none" viewBox="0 0 24 24"
+                             stroke-width="2" stroke="currentColor"
+                             class="w-3.5 h-3.5 shrink-0"
+                             style="color:#919ABB;">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/>
+                        </svg>
+
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="flex items-center gap-3 py-2">
+                    <div class="h-px flex-1" style="background:#CED3EE;"></div>
+
+                    <span class="text-[11px] font-semibold tracking-wider uppercase"
+                          style="color:#919ABB;">
+                        เลือกช่องทางชำระเงิน
+                    </span>
+
+                    <div class="h-px flex-1" style="background:#CED3EE;"></div>
+                </div>
+                
+                <!-- โซนบัญชีธนาคาร -->
+                <div class="space-y-4">
+
+                    <!-- บัตร Kiatnakin -->
+                    <div
+                        class="virtual-card account-card-kiatnakin relative rounded-[24px] p-5 shadow-lg overflow-hidden cursor-pointer border"
+                        onclick="copyText('2088430452', this, 'kiatnakin')">
+
+                        <svg class="account-decoration absolute -right-6 -bottom-6 w-32 h-32 transform -rotate-12 pointer-events-none"
+                             viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+
+                        <div class="relative z-10 flex flex-col gap-4">
+
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="account-brand px-3 py-1.5 rounded-full border">
+                                    <span class="font-bold text-sm tracking-wider">Kiatnakin</span>
+                                </div>
+
+                                <button type="button"
+                                        class="account-copy-btn bg-white text-[12px] font-bold px-4 py-2 rounded-full flex items-center gap-1.5 shadow-sm pointer-events-none">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                                    </svg>
+
+                                    คัดลอก
+                                </button>
+                            </div>
+
+                            <div class="mt-2">
+                                <div class="account-description text-[11px] font-medium mb-1">
+                                    ธนาคารเกียรตินาคิน
+                                </div>
+
+                                <div class="account-number font-bold text-[22px] tracking-widest leading-tight">
+                                    2088430452
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- บัตร BAAC -->
+                    <div
+                        class="virtual-card account-card-baac relative rounded-[24px] p-5 shadow-lg overflow-hidden cursor-pointer border"
+                        onclick="copyText('020254302150', this, 'baac')">
+
+                        <svg class="account-decoration absolute -left-6 -top-6 w-32 h-32 transform rotate-12 pointer-events-none"
+                             viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+
+                        <div class="relative z-10 flex flex-col gap-4">
+
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="account-brand px-3 py-1.5 rounded-full border">
+                                    <span class="font-bold text-sm tracking-wider">BAAC</span>
+                                </div>
+
+                                <button type="button"
+                                        class="account-copy-btn bg-white text-[12px] font-bold px-4 py-2 rounded-full flex items-center gap-1.5 shadow-sm pointer-events-none">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                                    </svg>
+
+                                    คัดลอก
+                                </button>
+                            </div>
+
+                            <div class="mt-2">
+                                <div class="account-description text-[11px] font-medium mb-1">
+                                    ธนาคารเพื่อการเกษตร
+                                </div>
+
+                                <div class="account-number font-bold text-[22px] tracking-widest leading-tight">
+                                    020254302150
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- บัตร TrueWallet -->
+                    <div
+                        class="virtual-card account-card-wallet relative rounded-[24px] p-5 shadow-lg overflow-hidden cursor-pointer border"
+                        onclick="copyText('0808910494', this, 'truewallet')">
+
+                        <svg class="account-decoration absolute -right-6 -bottom-6 w-32 h-32 transform rotate-12 pointer-events-none"
+                             viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                        </svg>
+
+                        <div class="relative z-10 flex flex-col gap-4">
+
+                            <div class="flex justify-between items-center gap-2">
+                                <div class="account-brand px-3 py-1.5 rounded-full border">
+                                    <span class="font-bold text-sm tracking-wider">TrueWallet</span>
+                                </div>
+
+                                <button type="button"
+                                        class="account-copy-btn bg-white text-[12px] font-bold px-4 py-2 rounded-full flex items-center gap-1.5 shadow-sm pointer-events-none">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width="14" height="14" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/>
+                                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                                    </svg>
+
+                                    คัดลอก
+                                </button>
+                            </div>
+
+                            <div class="mt-2">
+                                <div class="account-description text-[11px] font-medium mb-1">
+                                    ทรูมันนี่วอลเลท
+                                </div>
+
+                                <div class="account-number font-bold text-[22px] tracking-widest leading-tight">
+                                    0808910494
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- กล่องเตือนสำคัญ -->
+                    <div class="notice-card relative rounded-[20px] p-4 border-2 border-dashed shadow-sm z-10 overflow-hidden">
+
+                        <svg class="absolute -right-3 -bottom-3 w-14 h-14 pointer-events-none"
+                             style="color:#CED3EE;"
+                             fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+
+                        <div class="flex items-start gap-3 relative z-10">
+
+                            <div class="p-1.5 rounded-full shadow-sm flex-shrink-0 mt-1"
+                                 style="background:#919ABB;color:#FFFFFF;">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none" viewBox="0 0 24 24"
+                                     stroke-width="3" stroke="currentColor"
+                                     class="w-3.5 h-3.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+
+                            <div class="text-[12px] leading-relaxed text-left flex-1"
+                                 style="color:#90799E;">
+
+                                <span class="inline-block text-white text-[9px] font-bold px-2 py-0.5 rounded-full mb-1.5 tracking-wider shadow-sm"
+                                      style="background:#919ABB;">
+                                    สำคัญ
+                                </span>
+
+                                <br>
+
+                                <span class="font-bold text-[13px]">
+                                    ตรวจสอบชื่อและเลขบัญชีก่อนกดชำระเงินทุกครั้ง
+                                </span>
+
+                                <br>
+
+                                <span class="text-[11px] leading-snug block mt-1"
+                                      style="color:#919ABB;">
+                                    หากโอนผิดทางร้านขอไม่รับผิดชอบทุกกรณีนะคะ
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- กล่องแจ้งเตือนเรื่องกำกับสลิป -->
+                    <div class="relative rounded-[20px] p-3.5 border shadow-sm overflow-hidden"
+                         style="background:#FFFFFF;border-color:#CED3EE;">
+
+                        <div class="flex items-start gap-3 relative z-10">
+
+                            <div class="p-1.5 rounded-full flex-shrink-0 mt-0.5"
+                                 style="background:#E2E7F9;color:#90799E;">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none" viewBox="0 0 24 24"
+                                     stroke-width="2.5" stroke="currentColor"
+                                     class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+
+                            <div class="flex-1 text-left leading-relaxed"
+                                 style="color:#919ABB;">
+
+                                <p class="text-[10px] font-medium">
+                                    หากลืมกำกับสลิป โอนเพิ่ม 0.10฿ นะคะ
+                                </p>
+
+                                <p class="text-[9px] mt-1">
+                                    (ป้องกันการเอาบัญชีไปแอบอ้างในอนาคตค่ะ)
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- การ์ดข้อความกำกับสลิป -->
+                    <div class="slip-card relative overflow-hidden rounded-[24px] p-4 border shadow-md">
+
+                        <!-- ลายน้ำหัวใจ -->
+                        <svg class="absolute -right-3 -bottom-4 w-20 h-20 pointer-events-none"
+                             style="color:#CED3EE;opacity:0.5;"
+                             fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+
+                        <div class="relative z-10">
+
+                            <div class="flex items-center gap-2 mb-3">
+
+                                <div class="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+                                     style="background:#E2E7F9;color:#90799E;">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width="19" height="19" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor"
+                                         stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <rect x="8" y="2" width="8" height="20" rx="2"/>
+                                        <path d="M12 18h.01"/>
+                                        <path d="M10 6h4"/>
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <div class="text-sm font-bold" style="color:#90799E;">
+                                        ข้อความกำกับสลิป
+                                    </div>
+
+                                    <div class="text-[11px]" style="color:#919ABB;">
+                                        Slip Note · คัดลอกข้อความได้เลย
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ข้อความที่ต้องการคัดลอก -->
+                            <div class="border rounded-2xl px-3 py-4 text-center"
+                                 style="background:#FFFFFF;border-color:#E2E7F9;">
+
+                                <p id="slipNoteText"
+                                   class="text-[15px] font-semibold break-words"
+                                   style="color:#90799E;">
+                                    ซื้อ - ขายงานกับ jaoriche爱
+                                </p>
+                            </div>
+
+                            <!-- ปุ่มคัดลอกโน้ต -->
+                            <button
+                                type="button"
+                                id="copySlipNoteBtn"
+                                onclick="copySlipNote()"
+                                class="copy-note-btn mt-3 w-full flex items-center justify-center gap-2 rounded-full py-3 px-4 text-white text-sm font-semibold shadow-md hover:brightness-105 active:scale-[0.98]"
+                                style="background:linear-gradient(135deg,#919ABB 0%,#90799E 100%);">
+
+                                <svg id="copySlipNoteIcon"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     width="17" height="17" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor"
+                                     stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <rect width="14" height="14" x="8" y="8" rx="2"/>
+                                    <path d="M4 16c-1.1 0-2-.9-2-2V4
+                                             c0-1.1.9-2 2-2h10
+                                             c1.1 0 2 .9 2 2"/>
+                                </svg>
+
+                                <span id="copySlipNoteLabel">
+                                    คัดลอกข้อความกำกับสลิป
+                                </span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <!-- กล่องแจ้งเตือนหลังโอนเงิน -->
+                    <div class="rounded-2xl p-4 flex items-start gap-3 text-left border"
+                         style="background:#F8F9FF;border-color:#CED3EE;">
+
+                        <div class="p-1.5 rounded-full shadow-sm flex-shrink-0"
+                             style="background:#FFFFFF;color:#919ABB;">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none" viewBox="0 0 24 24"
+                                 stroke-width="2.5" stroke="currentColor"
+                                 class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                        </div>
+
+                        <div class="text-[12px] leading-relaxed font-medium"
+                             style="color:#90799E;">
+
+                            โอนแล้วรบกวนอย่าลืมแนบสลิปทุกครั้งด้วยน้า
+
+                            <span class="text-[11px] font-normal block mt-1"
+                                  style="color:#919ABB;">
+                                ริชจะตรวจสอบพร้อมลงคิวงานให้ทันทีงับ
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- จบโซนบัญชีธนาคาร -->
+
+              
+        <!-- Footer Note -->
+        <div class="text-center flex flex-col items-center justify-center
+                    gap-1.5 text-[11px] pt-1 relative z-10"
+             style="color:#919ABB;">
+
+            <div class="flex items-center gap-1 font-medium"
+                 style="color:#919ABB;">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none" viewBox="0 0 24 24"
+                     stroke-width="2" stroke="currentColor"
+                     class="w-4 h-4 anim-pulse"
+                     style="color:#919ABB;">
+
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"/>
+
+                </svg>
+
+                Thank for your support ka~
+
+            </div>
+
+            <p>jaoriche.studio16</p>
+
+        </div>
+
+    </div>
+    <!-- จบ Container หลัก -->
+
+
+    <script>
+        /* =========================================
+           ระบบ Toast Notification
+        ========================================= */
+
+        let toastTimer = null;
+
+        function showToastMessage(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+
+            if (!toast || !toastMessage) return;
+
+            toastMessage.textContent = message;
+
+            toast.classList.remove(
+                'opacity-0',
+                'translate-y-4'
+            );
+
+            toast.classList.add(
+                'opacity-100',
+                'translate-y-0'
+            );
+
+            clearTimeout(toastTimer);
+
+            toastTimer = setTimeout(() => {
+                toast.classList.remove(
+                    'opacity-100',
+                    'translate-y-0'
+                );
+
+                toast.classList.add(
+                    'opacity-0',
+                    'translate-y-4'
+                );
+            }, 2500);
+        }
+
+        /* รองรับชื่อฟังก์ชัน Toast เดิม */
+        function showToast() {
+            showToastMessage('คัดลอกข้อมูลแล้ว');
+        }
+
+
+        /* =========================================
+           ระบบคัดลอกข้อความ
+           รองรับ Clipboard API และวิธีสำรอง
+        ========================================= */
+
+        async function copyToClipboard(text) {
+            if (
+                navigator.clipboard &&
+                window.isSecureContext
+            ) {
+                await navigator.clipboard.writeText(text);
+                return;
+            }
+
+            const textarea = document.createElement('textarea');
+
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            textarea.style.top = '0';
+            textarea.style.opacity = '0';
+
+            document.body.appendChild(textarea);
+
+            textarea.focus();
+            textarea.select();
+
+            textarea.setSelectionRange(
+                0,
+                textarea.value.length
+            );
+
+            let copied = false;
+
+            try {
+                copied = document.execCommand('copy');
+            } finally {
+                textarea.remove();
+            }
+
+            if (!copied) {
+                throw new Error('คัดลอกไม่สำเร็จ');
+            }
+        }
+
+
+        /* =========================================
+           คัดลอกเลขบัญชีธนาคาร / TrueWallet
+        ========================================= */
+
+        async function copyText(text, containerElement, type) {
+            const buttonElement = containerElement.querySelector(
+                '.account-copy-btn'
+            );
+
+            if (!buttonElement) return;
+
+            if (buttonElement.dataset.copying === 'true') {
+                return;
+            }
+
+            const originalHtml = buttonElement.innerHTML;
+
+            buttonElement.dataset.copying = 'true';
+
+            try {
+                await copyToClipboard(text);
+
+                showToastMessage('คัดลอกเลขบัญชีแล้ว');
+
+                buttonElement.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke-width="2.5"
+                         stroke="currentColor"
+                         class="w-4 h-4">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M4.5 12.75l6 6 9-13.5"/>
+
+                    </svg>
+                    สำเร็จ
+                `;
+
+                buttonElement.style.background = '#90799E';
+                buttonElement.style.color = '#FFFFFF';
+
+                clearTimeout(buttonElement.resetTimer);
+
+                buttonElement.resetTimer = setTimeout(() => {
+                    buttonElement.innerHTML = originalHtml;
+                    buttonElement.style.background = '#FFFFFF';
+                    buttonElement.style.color = '#90799E';
+                    buttonElement.dataset.copying = 'false';
+                }, 2000);
+
+            } catch (error) {
+                console.error(
+                    'ไม่สามารถคัดลอกเลขบัญชีได้:',
+                    error
+                );
+
+                buttonElement.dataset.copying = 'false';
+
+                showToastMessage(
+                    'คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง'
+                );
+            }
+        }
+
+
+        /* =========================================
+           คัดลอกข้อความกำกับสลิป
+           ข้อความตามที่กำหนด
+        ========================================= */
+
+        async function copySlipNote() {
+            const note = ' ซื้อ - ขายงานกับ jaoriche爱 ';
+
+            const button = document.getElementById(
+                'copySlipNoteBtn'
+            );
+
+            const label = document.getElementById(
+                'copySlipNoteLabel'
+            );
+
+            const icon = document.getElementById(
+                'copySlipNoteIcon'
+            );
+
+            if (!button || !label || !icon) return;
+
+            if (button.dataset.copying === 'true') return;
+
+            button.dataset.copying = 'true';
+
+            try {
+                await copyToClipboard(note);
+
+                label.textContent = 'คัดลอกสำเร็จแล้ว!';
+
+                icon.innerHTML = `
+                    <path d="M20 6 9 17l-5-5"/>
+                `;
+
+                button.style.background =
+                    'linear-gradient(135deg,#90799E 0%,#766184 100%)';
+
+                showToastMessage(
+                    'คัดลอกข้อความกำกับสลิปแล้ว'
+                );
+
+                clearTimeout(button.resetTimer);
+
+                button.resetTimer = setTimeout(() => {
+                    label.textContent =
+                        'คัดลอกข้อความกำกับสลิป';
+
+                    icon.innerHTML = `
+                        <rect width="14" height="14"
+                              x="8" y="8" rx="2"/>
+
+                        <path d="M4 16c-1.1 0-2-.9-2-2V4
+                                 c0-1.1.9-2 2-2h10
+                                 c1.1 0 2 .9 2 2"/>
+                    `;
+
+                    button.style.background =
+                        'linear-gradient(135deg,#919ABB 0%,#90799E 100%)';
+
+                    button.dataset.copying = 'false';
+
+                }, 2000);
+
+            } catch (error) {
+                console.error(
+                    'คัดลอกข้อความกำกับสลิปไม่สำเร็จ:',
+                    error
+                );
+
+                button.dataset.copying = 'false';
+
+                showToastMessage(
+                    'คัดลอกไม่สำเร็จ กรุณาลองอีกครั้ง'
+                );
+            }
+        }
+
+
+        /* =========================================
+           ดาวน์โหลดรูป QR Code
+        ========================================= */
+
+        async function downloadQRCode() {
+            const image = document.getElementById(
+                'qrCodeImage'
+            );
+
+            const button = document.getElementById(
+                'downloadQrBtn'
+            );
+
+            if (!image) {
+                showToastMessage('ไม่พบรูป QR Code');
+                return;
+            }
+
+            const imageURL = image.currentSrc || image.src;
+
+            if (
+                !imageURL ||
+                !image.complete ||
+                image.naturalWidth === 0
+            ) {
+                showToastMessage(
+                    'รูปยังโหลดไม่เสร็จ กรุณาลองใหม่'
+                );
+                return;
+            }
+
+            const originalButtonHTML = button
+                ? button.innerHTML
+                : '';
+
+            if (button) {
+                if (button.disabled) return;
+
+                button.disabled = true;
+
+                button.classList.add(
+                    'opacity-70',
+                    'cursor-wait'
+                );
+
+                button.innerHTML = `
+                    <svg class="w-5 h-5 animate-spin"
+                         xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
+                         viewBox="0 0 24 24">
+
+                        <circle class="opacity-25"
+                                cx="12" cy="12" r="10"
+                                stroke="currentColor"
+                                stroke-width="4"/>
+
+                        <path class="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0
+                                 C5.373 0 0 5.373 0 12h4z"/>
+
+                    </svg>
+
+                    กำลังเตรียมรูป...
+                `;
+            }
+
+            let blobURL = null;
+
+            try {
+                /*
+                 * ดาวน์โหลดรูปเป็น Blob
+                 * เพื่อบันทึกเป็นไฟล์โดยตรง
+                 */
+                const response = await fetch(imageURL, {
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
+
+                if (!response.ok) {
+                    throw new Error(
+                        'ดาวน์โหลดรูปไม่สำเร็จ'
+                    );
+                }
+
+                const blob = await response.blob();
+
+                if (!blob.type.startsWith('image/')) {
+                    throw new Error(
+                        'ไฟล์ที่ได้รับไม่ใช่รูปภาพ'
+                    );
+                }
+
+                blobURL = URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+
+                link.href = blobURL;
+                link.download = 'Payment(Note Slip)3_20261012030322.jpg';
+                link.style.display = 'none';
+
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+
+                showToastMessage(
+                    'บันทึกรูป QR Code แล้ว'
+                );
+
+            } catch (error) {
+                console.warn(
+                    'ดาวน์โหลดรูปโดยตรงไม่ได้:',
+                    error
+                );
+
+                /*
+                 * กรณีเว็บไซต์หรือเบราว์เซอร์ไม่อนุญาต
+                 * ให้เปิดรูปต้นฉบับเพื่อบันทึกด้วยตนเอง
+                 */
+                try {
+                    const newWindow = window.open(
+                        imageURL,
+                        '_blank',
+                        'noopener,noreferrer'
+                    );
+
+                    if (newWindow) {
+                        showToastMessage(
+                            'เปิดรูปแล้ว กดค้างที่รูปเพื่อบันทึก'
+                        );
+                    } else {
+                        showToastMessage(
+                            'เปิดรูปไม่สำเร็จ กรุณาลองใหม่'
+                        );
+                    }
+
+                } catch (fallbackError) {
+                    console.error(
+                        'เปิดรูปสำรองไม่สำเร็จ:',
+                        fallbackError
+                    );
+
+                    showToastMessage(
+                        'ไม่สามารถเปิดรูปได้ กรุณาลองใหม่'
+                    );
+                }
+
+            } finally {
+                if (blobURL) {
+                    setTimeout(() => {
+                        URL.revokeObjectURL(blobURL);
+                    }, 3000);
+                }
+
+                if (button) {
+                    button.disabled = false;
+
+                    button.classList.remove(
+                        'opacity-70',
+                        'cursor-wait'
+                    );
+
+                    button.innerHTML = originalButtonHTML;
+                }
+            }
+        }
+
+    </script>
+
+</body>
+        </html>
+          
